@@ -1,3 +1,6 @@
+  <!-- badges: start -->
+  [![R-CMD-check](https://github.com/tobiste/laftr/workflows/R-CMD-check/badge.svg)](https://github.com/tobiste/laftr/actions)
+  <!-- badges: end -->
 # laftr
 
 **laftr** is a free and open-source **R** package calculates the ages from LA-ICP-MS based fission track (LAFT) dating using the zeta approach
@@ -18,6 +21,10 @@ The most recent development version of **laftr** is available from Github and ca
 remotes::install_github('tobiste/laftr')
 library('laftr')
 ```
+
+## Documentation
+https://tobiste.github.io/laftr/
+
 
 ## License
 GPL-3.0 License
