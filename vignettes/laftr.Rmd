@@ -1,0 +1,155 @@
+---
+title: "LA-ICP-MS fission track dating"
+author: "Tobias Stephan"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to tectonicr}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Basics
+
+LA-ICP-MS FT single-grain age calculation using the 'zeta' approach:
+
+$t = \frac{1}{\lambda}~\ln \left(1+\frac{1}{2} \lambda \zeta_{icp} \frac{N_s}{A_s [ ^{238}U/^xX]} \right)$
+
+single grain uncertainties:
+
+$\frac{s[t]}{t} \approx \sqrt{ \left( \frac{s[\zeta_{icp}]}{\zeta_{icp}} \right) ^2 + \left( \frac{s[^{238}U/^xX]}{[^{238}U/^xX]} \right) ^2 + \frac{1}{N_s} }$
+
+
+The pooled age is
+
+$\overline{t} = \frac{1}{\lambda}~\ln \left( 1 + \frac{1}{2} \lambda \zeta_{icp} \frac{\sum N_s}{\sum A_s [^{238}U/^{x}X]} \right)$
+
+
+Session 'zeta' is given by
+
+$\zeta_{icp} = \frac{\left( e^{\lambda t} -1 \right) U   }{ \frac{1}{2} \lambda \rho_s}$
+
+and its uncertainties are
+
+$\frac{s[\zeta_{icp}]}{\zeta_{icp}} = \sqrt{ \frac{1}{N_s} + \left( \frac{s[t]}{t}\right)^2 + \left(\frac{s[^{238}U/^{x}X]}{[^{238}U/^{x}X]}\right)^2}$
+
+
+## Data import
+
+``U`` [U content] is given as the ratio between 238U/43Ca based on cps (for apatite) or  U/Si (zircon). Therefor, we have to rename the columns.
+
+```{r import, warning=FALSE,message=FALSE}
+library(readxl)
+library(dplyr)
+
+library(laftr)
+
+# load the U concentrations
+sample <- read_xlsx('../data/example.xlsx', sheet = 'sample')  %>%
+    rename(U = UCa, sU = sUCa)
+
+# load the calibration measurements for zeta factor
+zeta.measurements <- read_xlsx('../data/example.xlsx', sheet = 'standard') %>%
+    rename(U = UCa, sU = sUCa)
+```
+
+## Zeta factor of the ICP-session
+
+`zeta_ICP()` by giving the calibration measurements and the used standard:
+```{r zeta1}
+session.zeta <- zeta_ICP(zeta.measurements, spotsize = 40, mineral = 'apatite', standard = 'Dur') 
+```
+It returns a list with the original data:
+
+```{r zeta2}
+head(session.zeta$data) %>% as_tibble()
+```
+
+...  the area, track densities, and the individual zetas:
+```{r zeta3}
+head(session.zeta$results) %>% as_tibble()
+```
+
+... and the final zeta factor (with uncertainty)
+```{r zeta4}
+session.zeta$zeta %>% as_tibble()
+```
+
+
+## Age calculation
+
+`age_ICP()` using the just calculated zeta factor for calibration
+
+```{r res}
+result <- age_ICP(sample, spotsize = 40, zeta = session.zeta$zeta)
+```
+
+returns a list containing the original dataset:
+```{r res.data}
+head(result$data) %>% as_tibble()
+```
+
+.. the individual ages:
+```{r ages}
+head(result$ages) %>% as_tibble()
+```
+
+... the pooled age of the sample:
+```{r ages.pooled}
+result$age.pooled
+```
+
+... and the chi-squared statistics:
+```{r chisq}
+result$stats
+```
+
+
+## Compatibility with IsoplotR
+
+```{r isoplotr}
+#library(IsoplotR)
+data.iso <- as.fissiontracks(sample, spotsize = 40, zeta = session.zeta$zeta)
+ages.iso <- as.fissiontracks(result$ages, ages = TRUE)
+```
+
+
+### KDE
+
+using the functions from the `IsoplotR` package (P. Vermeesch):
+
+```{r kde}
+IsoplotR::kde(ages.iso)
+```
+
+
+### Radial plot
+
+```{r radial}
+IsoplotR::radialplot(ages.iso)
+```
+
+### Central Age
+
+```{r central}
+IsoplotR::central(ages.iso)
+```
+
+### Weighted mean
+
+```{r w.mean}
+IsoplotR::weightedmean(ages.iso)
+```
+
+### Peak fitting
+
+```{r peaks}
+IsoplotR::peakfit(ages.iso)
+```
