@@ -2,8 +2,5 @@
 
 export(age_ICP)
 export(as.fissiontracks)
-export(chi_stats)
-export(get_chisq)
-export(get_prob_chisq)
 export(zeta_ICP)
 importFrom(stats,pchisq)

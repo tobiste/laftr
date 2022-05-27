@@ -100,7 +100,6 @@ get_ages <- function(x, rhos, zeta, ...) {
 
 #' Chi-squared statistic
 #' @inheritParams chi_stats
-#' @export
 get_chisq <- function(t, st, na.rm = TRUE) {
   z.i <- log(t)
   sigma.i <- st / t
@@ -116,10 +115,7 @@ get_chisq <- function(t, st, na.rm = TRUE) {
 #'
 #' @param chisq Chi-squared statistic
 #' @param n Number of grains
-#' @export
 #' @importFrom stats pchisq
-#' @examples
-#' get_prob_chisq(21.0991, 47)
 get_prob_chisq <- function(chisq, n) {
   stats::pchisq(chisq, df = n - 1, lower.tail = FALSE)
 }
@@ -128,7 +124,6 @@ get_prob_chisq <- function(chisq, n) {
 #' @param t ages
 #' @param st analytical uncertainties
 #' @param na.rm logical. wether NA values should be removed (TRUE) or not (FALSE)
-#' @export
 chi_stats <- function(t, st, na.rm = TRUE) {
   if (na.rm) {
     x <- data.frame(t, st)

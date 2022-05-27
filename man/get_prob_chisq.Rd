@@ -14,6 +14,3 @@ get_prob_chisq(chisq, n)
 \description{
 Probability of chi-squared
 }
-\examples{
-get_prob_chisq(21.0991, 47)
-}
