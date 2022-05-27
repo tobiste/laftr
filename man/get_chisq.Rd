@@ -6,6 +6,13 @@
 \usage{
 get_chisq(t, st, na.rm = TRUE)
 }
+\arguments{
+\item{t}{ages}
+
+\item{st}{analytical uncertainties}
+
+\item{na.rm}{logical. wether NA values should be removed (TRUE) or not (FALSE)}
+}
 \description{
 Chi-squared statistic
 }

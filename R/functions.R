@@ -11,7 +11,7 @@ pkg.env$lambda.fission <- c(8.45e-17, 0.1e-17) # fission decay constant (Holden 
 ## Standards
 pkg.env$standards <- data.frame(
   mineral = c("zircon", "zircon", "apatite", "apatite"),
-  standard = c("Dur", "FCT", "Dur", "FCT"),
+  standard = c(NA, "FCT", "Dur", NA),
   t = c(NA, 28200000, 31440000, NA),
   st = c(NA, NA, NA, NA),
   ref = c(NA, NA, NA, NA)
@@ -42,7 +42,6 @@ get_UxA <- function(r, U) {
 }
 
 #' Single-grain FT age
-#'
 get_age <-
   function(U,
            rhos,
@@ -65,6 +64,7 @@ get_age_error_perc <- function(t, st) {
 
 #' Zeta error
 get_zeta_error <- function(x, zeta) {
+  Ns <- U <- sU <- NULL
   sqrt(1 / x$Ns + (x$st / x$t) ^ 2 + (x$sU / x$U) ^ 2) * zeta
 }
 
@@ -79,9 +79,6 @@ get_zeta_error <- function(x, zeta) {
 #' @param sU standard deviation of \code{U}
 #' @param zeta calibration factor based on FCT2 fission-track age standard
 #' @note You can either use U ratio cps, or U ppm. Whatever you choose for zeta calculation you must use for age calculation too
-#' @examples
-#' data("sample")
-#' get_ages(sample, zeta = c(0.1188, 0.0119))
 get_ages <- function(x, rhos, zeta, ...) {
   t <- get_age(U = x$U,
                rhos = rhos,
@@ -102,6 +99,7 @@ get_ages <- function(x, rhos, zeta, ...) {
 }
 
 #' Chi-squared statistic
+#' @inheritParams chi_stats
 #' @export
 get_chisq <- function(t, st, na.rm = TRUE) {
   z.i <- log(t)
@@ -119,18 +117,18 @@ get_chisq <- function(t, st, na.rm = TRUE) {
 #' @param chisq Chi-squared statistic
 #' @param n Number of grains
 #' @export
+#' @importFrom stats pchisq
 #' @examples
 #' get_prob_chisq(21.0991, 47)
 get_prob_chisq <- function(chisq, n) {
-  pchisq(chisq, df = n - 1, lower.tail = FALSE)
+  stats::pchisq(chisq, df = n - 1, lower.tail = FALSE)
 }
 
 #' Chisq stats
+#' @param t ages
+#' @param st analytical uncertainties
+#' @param na.rm logical. wether NA values should be removed (TRUE) or not (FALSE)
 #' @export
-#' @examples
-#' data("sample")
-#' ages <- get_ages(sample, zeta = c(0.1188, 0.0119))
-#' chi_stats(ages$t[1:25], ages$st[1:25])
 chi_stats <- function(t, st, na.rm = TRUE) {
   if (na.rm) {
     x <- data.frame(t, st)
@@ -161,9 +159,9 @@ get_age_pooled0 <-
 
 #' Pooled age
 #'
-#' @examples
-#' data("sample")
-#' pooled_age(sample, zeta = c(0.1188, 0.0119))
+#' @param x dataset
+#' @param r Radius
+#' @param zeta two-element vector with the zeta-factor and its standard error.
 pooled_age <- function(x, r, zeta, ...) {
   t.pool <- get_age_pooled0(x, r = r, zeta = zeta[1])
   st.pool <- t.pool * sqrt(1 / sum(x$Ns, na.rm = TRUE) + (zeta[2] / zeta[1]) ^
@@ -230,6 +228,8 @@ age_ICP <- function(x, spotsize = 40, zeta, ...) {
 #' @param tst (optional) two-column vector giving the true age and its standard error. overrides mineral and standard
 #' @param mineral Mineral of the standard, one of 'zircon' or 'apatite'
 #' @param standard Name of the standard, one of 'Dur' or 'FCT'
+#' @param lambda (optional) decay constant
+#' @param g (optional) geometry factor (default: 0.5)
 #' @param ... additional arguments
 #' @return list containing: two-element vector with the session zeta and its standard error
 #' @references Hasebe, N., Carter, A., Hurford, A.J., Arai, S., 2009. The effect of chemical etching on LA-ICP-MS analysis in determining uranium concentration for fission-track chronometry. Geol. Soc. Lond. Spec. Publ. 324 (1), 37--46. \doi{10.1144/SP324.3}
@@ -242,15 +242,16 @@ zeta_ICP <-
            spotsize = 40,
            mineral = c("zircon", "apatite"),
            standard = c("Dur", "FCT"),
-           calibration,
+           tst,
            lambda = pkg.env$lambda[1],
            g = pkg.env$g,
            ...) {
     min <- match.arg(mineral)
     name <- match.arg(standard)
+    zeta.factor <- NULL
     stopifnot(is.numeric(spotsize))
 
-    if(missing(calibration)){
+    if(missing(tst)){
     std <-
       subset(pkg.env$standards,
              mineral == min & standard == name,

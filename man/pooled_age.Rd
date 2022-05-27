@@ -6,10 +6,13 @@
 \usage{
 pooled_age(x, r, zeta, ...)
 }
+\arguments{
+\item{x}{dataset}
+
+\item{r}{Radius}
+
+\item{zeta}{two-element vector with the zeta-factor and its standard error.}
+}
 \description{
 Pooled age
-}
-\examples{
-data("sample")
-pooled_age(sample, zeta = c(0.1188, 0.0119))
 }

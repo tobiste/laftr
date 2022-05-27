@@ -23,7 +23,3 @@ blabla bla
 \note{
 You can either use U ratio cps, or U ppm. Whatever you choose for zeta calculation you must use for age calculation too
 }
-\examples{
-data("sample")
-get_ages(sample, zeta = c(0.1188, 0.0119))
-}

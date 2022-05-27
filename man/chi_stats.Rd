@@ -6,11 +6,13 @@
 \usage{
 chi_stats(t, st, na.rm = TRUE)
 }
+\arguments{
+\item{t}{ages}
+
+\item{st}{analytical uncertainties}
+
+\item{na.rm}{logical. wether NA values should be removed (TRUE) or not (FALSE)}
+}
 \description{
 Chisq stats
-}
-\examples{
-data("sample")
-ages <- get_ages(sample, zeta = c(0.1188, 0.0119))
-chi_stats(ages$t[1:25], ages$st[1:25])
 }

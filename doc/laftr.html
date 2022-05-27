@@ -165,11 +165,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(laftr)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># load the U concentrations</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>sample <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">&#39;../data/example.xlsx&#39;</span>, <span class="at">sheet =</span> <span class="st">&#39;sample&#39;</span>)  <span class="sc">%&gt;%</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>sample <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">&#39;../inst/extdata/example.xlsx&#39;</span>, <span class="at">sheet =</span> <span class="st">&#39;sample&#39;</span>)  <span class="sc">%&gt;%</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">U =</span> UCa, <span class="at">sU =</span> sUCa)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># load the calibration measurements for zeta factor</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>zeta.measurements <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">&#39;../data/example.xlsx&#39;</span>, <span class="at">sheet =</span> <span class="st">&#39;standard&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>zeta.measurements <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">&#39;../inst/extdata/example.xlsx&#39;</span>, <span class="at">sheet =</span> <span class="st">&#39;standard&#39;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">U =</span> UCa, <span class="at">sU =</span> sUCa)</span></code></pre></div>
 </div>
 <div id="zeta-factor-of-the-icp-session" class="section level2">

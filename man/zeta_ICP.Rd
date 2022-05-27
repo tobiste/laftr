@@ -9,7 +9,7 @@ zeta_ICP(
   spotsize = 40,
   mineral = c("zircon", "apatite"),
   standard = c("Dur", "FCT"),
-  calibration,
+  tst,
   lambda = pkg.env$lambda[1],
   g = pkg.env$g,
   ...
@@ -24,9 +24,13 @@ zeta_ICP(
 
 \item{standard}{Name of the standard, one of 'Dur' or 'FCT'}
 
-\item{...}{additional arguments}
-
 \item{tst}{(optional) two-column vector giving the true age and its standard error. overrides mineral and standard}
+
+\item{lambda}{(optional) decay constant}
+
+\item{g}{(optional) geometry factor (default: 0.5)}
+
+\item{...}{additional arguments}
 }
 \value{
 list containing: two-element vector with the session zeta and its standard error

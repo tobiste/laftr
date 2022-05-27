@@ -8,11 +8,11 @@ library(dplyr)
 library(laftr)
 
 # load the U concentrations
-sample <- read_xlsx('../data/example.xlsx', sheet = 'sample')  %>%
+sample <- read_xlsx('../inst/extdata/example.xlsx', sheet = 'sample')  %>%
     rename(U = UCa, sU = sUCa)
 
 # load the calibration measurements for zeta factor
-zeta.measurements <- read_xlsx('../data/example.xlsx', sheet = 'standard') %>%
+zeta.measurements <- read_xlsx('../inst/extdata/example.xlsx', sheet = 'standard') %>%
     rename(U = UCa, sU = sUCa)
 
 ## ----zeta1--------------------------------------------------------------------
