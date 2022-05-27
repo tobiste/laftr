@@ -56,7 +56,7 @@ U-concentration measurements (in ppm) and their analytical uncertainties.</p>
   spotsize <span class="op">=</span> <span class="fl">40</span>,
   mineral <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"zircon"</span>, <span class="st">"apatite"</span><span class="op">)</span>,
   standard <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dur"</span>, <span class="st">"FCT"</span><span class="op">)</span>,
-  <span class="va">calibration</span>,
+  <span class="va">tst</span>,
   lambda <span class="op">=</span> <span class="va">pkg.env</span><span class="op">$</span><span class="va">lambda</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,
   g <span class="op">=</span> <span class="va">pkg.env</span><span class="op">$</span><span class="va">g</span>,
   <span class="va">...</span>
@@ -73,10 +73,14 @@ U-concentration measurements (in ppm) and their analytical uncertainties.</p>
 <dd><p>Mineral of the standard, one of 'zircon' or 'apatite'</p></dd>
 <dt>standard</dt>
 <dd><p>Name of the standard, one of 'Dur' or 'FCT'</p></dd>
-<dt>...</dt>
-<dd><p>additional arguments</p></dd>
 <dt>tst</dt>
 <dd><p>(optional) two-column vector giving the true age and its standard error. overrides mineral and standard</p></dd>
+<dt>lambda</dt>
+<dd><p>(optional) decay constant</p></dd>
+<dt>g</dt>
+<dd><p>(optional) geometry factor (default: 0.5)</p></dd>
+<dt>...</dt>
+<dd><p>additional arguments</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -90,9 +94,64 @@ U-concentration measurements (in ppm) and their analytical uncertainties.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"standard"</span><span class="op">)</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>data set ‘standard’ not found</span>
 <span class="r-in"><span class="fu">zeta_ICP</span><span class="op">(</span><span class="va">standard</span>, spotsize <span class="op">=</span> <span class="fl">40</span>, mineral <span class="op">=</span> <span class="st">'apatite'</span>, standard <span class="op">=</span> <span class="st">'Dur'</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get_rhos(Ns = x$Ns, area = get_area(r)):</span> object 'standard' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 34 × 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Grain     Ns UO           U       sU comments</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> DUR-1      4 <span style="color: #BB0000;">NA</span>    0.000<span style="text-decoration: underline;">496</span> 0.000<span style="text-decoration: underline;">016</span> <span style="color: #BB0000;">NA</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> DUR-2      3 <span style="color: #BB0000;">NA</span>    0.000<span style="text-decoration: underline;">52</span>  0.000<span style="text-decoration: underline;">018</span> <span style="color: #BB0000;">NA</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> DUR-3      1 <span style="color: #BB0000;">NA</span>    0.000<span style="text-decoration: underline;">476</span> 0.000<span style="text-decoration: underline;">014</span> <span style="color: #BB0000;">NA</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> DUR-4      3 <span style="color: #BB0000;">NA</span>    0.000<span style="text-decoration: underline;">465</span> 0.000<span style="text-decoration: underline;">014</span> <span style="color: #BB0000;">NA</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> DUR-5      6 <span style="color: #BB0000;">NA</span>    0.000<span style="text-decoration: underline;">471</span> 0.000<span style="text-decoration: underline;">012</span> <span style="color: #BB0000;">NA</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> DUR-6      3 <span style="color: #BB0000;">NA</span>    0.000<span style="text-decoration: underline;">469</span> 0.000<span style="text-decoration: underline;">014</span> <span style="color: #BB0000;">NA</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> DUR-7      4 <span style="color: #BB0000;">NA</span>    0.000<span style="text-decoration: underline;">471</span> 0.000<span style="text-decoration: underline;">013</span> <span style="color: #BB0000;">NA</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> DUR-8      2 <span style="color: #BB0000;">NA</span>    0.000<span style="text-decoration: underline;">495</span> 0.000<span style="text-decoration: underline;">016</span> <span style="color: #BB0000;">NA</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> DUR-9      4 <span style="color: #BB0000;">NA</span>    0.000<span style="text-decoration: underline;">477</span> 0.000<span style="text-decoration: underline;">018</span> <span style="color: #BB0000;">NA</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> DUR-10     2 <span style="color: #BB0000;">NA</span>    0.000<span style="text-decoration: underline;">461</span> 0.000<span style="text-decoration: underline;">015</span> <span style="color: #BB0000;">NA</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 24 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $results</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         rhos       zeta</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  318309.89 0.09822082</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  238732.41 0.13729792</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   79577.47 0.37704122</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  238732.41 0.12277603</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  477464.83 0.06218012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  238732.41 0.12383217</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  318309.89 0.09327018</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  159154.94 0.19604559</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  318309.89 0.09445833</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 159154.94 0.18257984</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 238732.41 0.12013568</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 159154.94 0.17069828</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 159154.94 0.17307460</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 238732.41 0.11960761</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 397887.36 0.07176457</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 238732.41 0.11142255</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 557042.30 0.04933673</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 238732.41 0.12198393</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 318309.89 0.09406228</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 238732.41 0.12673655</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 238732.41 0.17188644</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22  79577.47 0.48951991</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23  79577.47 0.47130153</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24 238732.41 0.15683648</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25 318309.89 0.09267610</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26  79577.47 0.36436757</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27 397887.36 0.07667561</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28 477464.83 0.05835162</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29 318309.89 0.09564649</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30 238732.41 0.12832075</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31 238732.41 0.12383217</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32 238732.41 0.12515234</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33 159154.94 0.18178773</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34 318309.89 0.08752743</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $zeta</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       zeta        std </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.11831145 0.01182395 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

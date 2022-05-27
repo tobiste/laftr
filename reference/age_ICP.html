@@ -87,9 +87,91 @@ U/Si (for zircon) ratio measurement.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"sample"</span><span class="op">)</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>data set ‘sample’ not found</span>
 <span class="r-in"><span class="fu">age_ICP</span><span class="op">(</span><span class="va">sample</span>, spotsize <span class="op">=</span> <span class="fl">40</span>, zeta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1188</span>, <span class="fl">0.0119</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object of type 'closure' is not subsettable</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 57 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Grain     Ns        U       sU comments            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> FCT-1      7 0.000<span style="text-decoration: underline;">905</span> 0.000<span style="text-decoration: underline;">016</span> <span style="color: #BB0000;">NA</span>                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> FCT-2      1 0.000<span style="text-decoration: underline;">828</span> 0.000<span style="text-decoration: underline;">017</span> broken grain        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> FCT-3      2 0.000<span style="text-decoration: underline;">774</span> 0.000<span style="text-decoration: underline;">015</span> <span style="color: #BB0000;">NA</span>                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> FCT-4      1 0.000<span style="text-decoration: underline;">416</span> 0.000<span style="text-decoration: underline;">022</span> <span style="color: #BB0000;">NA</span>                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> FCT-5      2 0.000<span style="text-decoration: underline;">724</span> 0.000<span style="text-decoration: underline;">019</span> edge                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> FCT-6      1 0.000<span style="text-decoration: underline;">122</span> 0.000<span style="text-decoration: underline;">013</span> <span style="color: #BB0000;">NA</span>                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> FCT-7      3 0.000<span style="text-decoration: underline;">929</span> 0.000<span style="text-decoration: underline;">032</span> small area, fracture</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> FCT-8      2 0.000<span style="text-decoration: underline;">521</span> 0.000<span style="text-decoration: underline;">023</span> <span style="color: #BB0000;">NA</span>                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> FCT-9      4 0.000<span style="text-decoration: underline;">907</span> 0.000<span style="text-decoration: underline;">025</span> edge, inclusion     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> FCT-10    <span style="color: #BB0000;">NA</span> 0.000<span style="text-decoration: underline;">5</span>   0.000<span style="text-decoration: underline;">19</span>  <span style="color: #BB0000;">NA</span>                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 47 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ages</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            t        st   st.perc     t.max       t.min      rhos zeta.error</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  36.458380 14.270250  39.14121 50.728630 22.18812986 557042.30 0.06467491</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   5.706292  5.736045 100.52140 11.442337 -0.02975275  79577.47 0.16846480</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  12.202660  8.717938  71.44293 20.920598  3.48472167 159154.94 0.11943890</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  11.352742 11.425341 100.63948 22.778083 -0.07259845  79577.47 0.16866367</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  13.044533  9.322255  71.46484 22.366788  3.72227776 159154.94 0.11947590</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  38.629126 39.040043 101.06375 77.669169 -0.41091764  79577.47 0.16937825</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  15.246440  8.949459  58.69868 24.195899  6.29698051 238732.41 0.09789822</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  18.120006 12.965400  71.55296 31.085406  5.15460603 159154.94 0.11962466</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  20.812681 10.628607  51.06794 31.441288 10.18407364 318309.89 0.08496926</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10        NA        NA        NA        NA          NA        NA         NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 16.140126 11.576849  71.72713 27.716975  4.56327653 159154.94 0.11991873</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12        NA        NA        NA        NA          NA        NA         NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 40.274797 15.778634  39.17744 56.053431 24.49616252 557042.30 0.06473681</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 24.988063 11.472550  45.91212 36.460613 13.51551356 397887.36 0.07621285</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 33.484630 15.369680  45.90070 48.854310 18.11495049 397887.36 0.07619343</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 15.667566  9.190224  58.65764 24.857791  6.47734172 238732.41 0.09782875</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17        NA        NA        NA        NA          NA        NA         NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 24.668566 12.597579  51.06733 37.266146 12.07098736 318309.89 0.08496823</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19  6.241234  6.274423 100.53177 12.515656 -0.03318896  79577.47 0.16848226</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 18.318973 10.759575  58.73460 29.078548  7.55939750 238732.41 0.09795901</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 29.076753 13.338053  45.87188 42.414806 15.73870050 397887.36 0.07614442</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22  4.377302  3.130758  71.52255  7.508059  1.24654411 159154.94 0.11957332</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23  5.135890  5.163053 100.52888 10.298943 -0.02716260  79577.47 0.16847739</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24 18.108437 10.619280  58.64272 28.727716  7.48915693 238732.41 0.09780350</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25 39.990850 16.848473  42.13082 56.839323 23.14237639 477464.83 0.06977592</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26 19.108904 11.225847  58.74668 30.334751  7.88305765 238732.41 0.09797945</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27 16.920076  9.929758  58.68625 26.849834  6.99031746 238732.41 0.09787718</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28 33.163565 13.954423  42.07757 47.117988 19.20914212 477464.83 0.06968516</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29 18.879933 11.073508  58.65226 29.953441  7.80642479 238732.41 0.09781966</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30 31.859667 16.343140  51.29727 48.202807 15.51652707 318309.89 0.08535830</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31  8.102799  5.790755  71.46611 13.893554  2.31204336 159154.94 0.11947804</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32 33.705488 12.423181  36.85804 46.128669 21.28230693 636619.77 0.06077050</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33 21.130562 12.398043  58.67351 33.528605  8.73251938 238732.41 0.09785562</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34 13.414731  9.583553  71.44051 22.998283  3.83117834 159154.94 0.11943482</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35 20.744178 14.845701  71.56563 35.589878  5.89847719 159154.94 0.11964605</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36 24.778483 11.360878  45.84977 36.139361 13.41760453 397887.36 0.07610683</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37 25.500318 14.958441  58.65982 40.458759 10.54187631 238732.41 0.09783245</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38 22.772961 10.452356  45.89810 33.225316 12.32060506 397887.36 0.07618900</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39 18.534462 10.867671  58.63494 29.402133  7.66679156 238732.41 0.09779034</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40 24.340414 10.242028  42.07828 34.582442 14.09838509 477464.83 0.06968637</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41 15.710962 11.229039  71.47264 26.940001  4.48192286 159154.94 0.11948906</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42  6.080660  6.112713 100.52713 12.193373 -0.03205291  79577.47 0.16847444</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43 10.146472  7.249547  71.44895 17.396020  2.89692475 159154.94 0.11944905</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44 23.445025 12.009274  51.22312 35.454300 11.43575127 318309.89 0.08523252</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45 49.115177 18.507773  37.68239 67.622950 30.60740352 636619.77 0.06218120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46 19.638164 11.527608  58.70003 31.165772  8.11055652 238732.41 0.09790049</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47 16.279089 11.636951  71.48404 27.916041  4.64213815 159154.94 0.11950831</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48 27.265390 19.518054  71.58546 46.783444  7.74733647 159154.94 0.11967953</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49  6.525566  6.560458 100.53469 13.086023 -0.03489158  79577.47 0.16848718</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50  8.075114  8.133361 100.72131 16.208475 -0.05824626  79577.47 0.16880149</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51 46.007853 16.943765  36.82798 62.951618 29.06408885 636619.77 0.06071905</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52 24.928761 12.727437  51.05523 37.656198 12.20132458 318309.89 0.08494770</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53 34.876399 14.676691  42.08201 49.553090 20.19970797 477464.83 0.06969273</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54 31.816777 14.642076  46.01998 46.458853 17.17470143 397887.36 0.07639626</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55 20.111642 11.790776  58.62662 31.902418  8.32086689 238732.41 0.09777625</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56 28.388229 11.113137  39.14699 39.501366 17.27509193 557042.30 0.06468479</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57 24.403244 14.319739  58.67965 38.722983 10.08350499 238732.41 0.09786601</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $age.pooled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       age       std </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15.275397  3.402745 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $stats</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       chisq probability </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  42.2639893   0.8547253 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
