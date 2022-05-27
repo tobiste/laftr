@@ -2,8 +2,12 @@ Package: laftr
 Title: Calculates the ages from LA-ICP-MS based fission track dating
 Version: 0.0.0.9000
 Authors@R: 
+    c(
     person("Tobias", "Stephan", , "tobias.stephan1@yahoo.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-9290-014X"))
+           comment = c(ORCID = "0000-0002-9290-014X")),
+    person(given = "Tais", family = "Fontes Pinto",
+      role = c("aut"))
+      )
 Description: What the package does (one paragraph).
 License: GPL (>= 3)
 Encoding: UTF-8
