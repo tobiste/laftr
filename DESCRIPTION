@@ -18,7 +18,8 @@ VignetteBuilder:
 Imports:
     ggplot2,
     IsoplotR,
-    provenance
+    provenance,
+    rlang
 Suggests: 
     knitr,
     rmarkdown,

@@ -35,21 +35,13 @@ geom_aKDE(
   mapping = NULL,
   data = NULL,
   stat = "DensityAdaptive",
-  geom = "area",
-  position = "stack",
+  position = "identity",
   ...,
-  from = NA,
-  to = NA,
-  bw = NA,
-  adjust = 1,
-  kernel = "gaussian",
-  n = 512,
-  adaptive = TRUE,
   na.rm = FALSE,
-  bounds = c(-Inf, Inf),
-  show.legend = NA,
   orientation = NA,
-  inherit.aes = TRUE
+  show.legend = NA,
+  inherit.aes = TRUE,
+  outline.type = "upper"
 )
 }
 \arguments{
@@ -127,6 +119,10 @@ rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
+\item{outline.type}{Type of the outline of the area; \code{"both"} draws both the
+upper and lower lines, \code{"upper"}/\code{"lower"} draws the respective lines only.
+\code{"full"} draws a closed polygon around the area.}
+
 \item{weight}{numeric vector of non-negative observation weights, hence of
 same length as \code{x}. The default \code{NULL} is equivalent to
 \code{weights = rep(1/nx, nx)} where \code{nx} is the length of (the finite entries of)
@@ -146,12 +142,12 @@ data("examples", package = "IsoplotR")
 ages <- IsoplotR::age(examples$UPb)[, "t.conc"]
 unc <- IsoplotR::age(examples$UPb)[, "s[t.conc]"]
 
-ggplot(data = data.frame(ages = ages, unc = unc), mapping = aes(x = ages, weight = unc/ages)) +
+ggplot2::ggplot(data = data.frame(ages = ages, unc = unc), mapping = ggplot2::aes(x = ages, weight = unc / ages)) +
   stat_aKDE(adaptive = TRUE) +
   stat_aKDE(adaptive = FALSE, color = "red", fill = NA)
 
-ggplot(data = data.frame(ages = ages, unc = unc), mapping = aes(x = ages, weight = unc/ages)) +
+ggplot2::ggplot(data = data.frame(ages = ages, unc = unc), mapping = ggplot2::aes(x = ages, weight = unc / ages)) +
   geom_aKDE(aes(y = after_stat(scaled)), from = 220, to = 260, kernel = "epanechnikov", fill = "steelblue", alpha = .75) +
-  geom_histogram(aes(y = after_stat(ncount)), color = "grey", fill = "grey", alpha = .5) +
-  geom_rug(alpha = 0.5)
+  ggplot2::geom_histogram(aes(y = after_stat(ncount)), color = "grey", fill = "grey", alpha = .5) +
+  ggplot2::geom_rug(alpha = 0.5)
 }
