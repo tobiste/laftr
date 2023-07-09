@@ -2,5 +2,10 @@
 
 export(age_ICP)
 export(as.fissiontracks)
+export(geom_aKDE)
+export(stat_aKDE)
 export(zeta_ICP)
+import(IsoplotR)
+import(ggplot2)
+importFrom(provenance,botev)
 importFrom(stats,pchisq)
