@@ -142,13 +142,12 @@ data("examples", package = "IsoplotR")
 ages <- IsoplotR::age(examples$UPb)[, "t.conc"]
 unc <- IsoplotR::age(examples$UPb)[, "s[t.conc]"]
 
-ggplot2::ggplot(data = data.frame(ages = ages, unc = unc), mapping = ggplot2::aes(x = ages, weight = 1/(unc / ages))) +
+ggplot2::ggplot(data = data.frame(ages = ages, unc = unc), mapping = ggplot2::aes(x = ages)) +
   stat_aKDE(adaptive = TRUE) +
   stat_aKDE(adaptive = FALSE, color = "red", fill = NA)
 
-ggplot2::ggplot(data = data.frame(ages = ages, unc = unc), mapping = ggplot2::aes(x = ages, weight = 1/(unc / ages))) +
+ggplot2::ggplot(data = data.frame(ages = ages, unc = unc), mapping = ggplot2::aes(x = ages, weight = ages/unc)) +
   geom_aKDE(aes(y = after_stat(scaled)), from = 220, to = 260, kernel = "epanechnikov", fill = "steelblue", alpha = .75) +
   ggplot2::geom_histogram(aes(y = after_stat(ncount)), color = "grey", fill = "grey", alpha = .5) +
-  ggplot2::geom_rug(alpha = 0.5) +
-  scale_x_reverse()
+  ggplot2::geom_rug(alpha = 0.5)
 }

@@ -43,4 +43,3 @@
 #
 # save(sample, file = "data/sample.RData", compress = TRUE, ascii = TRUE)
 # save(standard, file = "data/standard.RData", compress = TRUE, ascii = TRUE)
-

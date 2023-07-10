@@ -3,8 +3,10 @@
 ## Constants
 pkg.env <- new.env()
 pkg.env$e <- exp(1)
-pkg.env$lambda <- c(1.55125e-10,
-                    0.000000083) # U238 decay constant of Jaffey et al. (1971)
+pkg.env$lambda <- c(
+  1.55125e-10,
+  0.000000083
+) # U238 decay constant of Jaffey et al. (1971)
 pkg.env$g <- 0.5 # geometry factor
 pkg.env$lambda.fission <- c(8.45e-17, 0.1e-17) # fission decay constant (Holden and Hoffmann 2000)
 
@@ -17,13 +19,13 @@ pkg.env$standards <- data.frame(
   ref = c(NA, NA, NA, NA)
 )
 pkg.env$standards$zeta.factor <-
-  pkg.env$e ^ (pkg.env$lambda[1] * pkg.env$standards$t) - 1
+  pkg.env$e^(pkg.env$lambda[1] * pkg.env$standards$t) - 1
 
 
 #' Area of the laser spot and count area
 #' @param x radius
 get_area <- function(x) {
-  pi * x ^ 2
+  pi * x^2
 }
 
 
@@ -52,10 +54,10 @@ get_age <-
   }
 
 get_age_error <- function(t, Ns, U, sU, zeta) {
-  if(is.null(zeta[2])){
+  if (is.null(zeta[2])) {
     zeta[2] <- 0
   }
-  t * (sqrt((1 / Ns) + (zeta[2] / zeta[1]) ^ 2 + (sU / U) ^ 2))
+  t * (sqrt((1 / Ns) + (zeta[2] / zeta[1])^2 + (sU / U)^2))
 }
 
 get_age_error_perc <- function(t, st) {
@@ -65,7 +67,7 @@ get_age_error_perc <- function(t, st) {
 #' Zeta error
 get_zeta_error <- function(x, zeta) {
   Ns <- U <- sU <- NULL
-  sqrt(1 / x$Ns + (x$st / x$t) ^ 2 + (x$sU / x$U) ^ 2) * zeta
+  sqrt(1 / x$Ns + (x$st / x$t)^2 + (x$sU / x$U)^2) * zeta
 }
 
 
@@ -80,9 +82,11 @@ get_zeta_error <- function(x, zeta) {
 #' @param zeta calibration factor based on FCT2 fission-track age standard
 #' @note You can either use U ratio cps, or U ppm. Whatever you choose for zeta calculation you must use for age calculation too
 get_ages <- function(x, rhos, zeta, ...) {
-  t <- get_age(U = x$U,
-               rhos = rhos,
-               zeta = zeta)
+  t <- get_age(
+    U = x$U,
+    rhos = rhos,
+    zeta = zeta
+  )
   st <-
     get_age_error(
       t = t,
@@ -104,11 +108,11 @@ get_chisq <- function(t, st, na.rm = TRUE) {
   z.i <- log(t)
   sigma.i <- st / t
 
-  a <- (z.i / sigma.i) ^ 2
-  b <- z.i / sigma.i ^ 2
-  c <- 1 / sigma.i ^ 2
+  a <- (z.i / sigma.i)^2
+  b <- z.i / sigma.i^2
+  c <- 1 / sigma.i^2
 
-  sum(a, na.rm = na.rm) - sum(b, na.rm = na.rm) ^ 2 / sum(c, na.rm = na.rm)
+  sum(a, na.rm = na.rm) - sum(b, na.rm = na.rm)^2 / sum(c, na.rm = na.rm)
 }
 
 #' Probability of chi-squared
@@ -133,8 +137,10 @@ chi_stats <- function(t, st, na.rm = TRUE) {
   }
   chisq <- get_chisq(t, st, na.rm = pkg.env$e)
   P.chisq <- get_prob_chisq(chisq, n = length(t))
-  return(c("chisq" = chisq,
-           "probability" = P.chisq))
+  return(c(
+    "chisq" = chisq,
+    "probability" = P.chisq
+  ))
 }
 
 
@@ -159,8 +165,8 @@ get_age_pooled0 <-
 #' @param zeta two-element vector with the zeta-factor and its standard error.
 pooled_age <- function(x, r, zeta, ...) {
   t.pool <- get_age_pooled0(x, r = r, zeta = zeta[1])
-  st.pool <- t.pool * sqrt(1 / sum(x$Ns, na.rm = TRUE) + (zeta[2] / zeta[1]) ^
-                             2 + (sum(x$sU, na.rm = TRUE) / sum(x$U, na.rm = TRUE)) ^ 2)
+  st.pool <- t.pool * sqrt(1 / sum(x$Ns, na.rm = TRUE) + (zeta[2] / zeta[1])^
+    2 + (sum(x$sU, na.rm = TRUE) / sum(x$U, na.rm = TRUE))^2)
 
   names(t.pool) <- NULL
   names(st.pool) <- NULL
@@ -231,7 +237,7 @@ age_ICP <- function(x, spotsize = 40, zeta, ...) {
 #' @export
 #' @examples
 #' data("standard")
-#' zeta_ICP(standard, spotsize = 40, mineral = 'apatite', standard = 'Dur')
+#' zeta_ICP(standard, spotsize = 40, mineral = "apatite", standard = "Dur")
 zeta_ICP <-
   function(x,
            spotsize = 40,
@@ -246,19 +252,19 @@ zeta_ICP <-
     zeta.factor <- NULL
     stopifnot(is.numeric(spotsize))
 
-    if(missing(tst)){
-    std <-
-      subset(pkg.env$standards,
-             mineral == min & standard == name,
-             select = c(t, zeta.factor))
-
+    if (missing(tst)) {
+      std <-
+        subset(pkg.env$standards,
+          mineral == min & standard == name,
+          select = c(t, zeta.factor)
+        )
     } else {
       stopifnot(is.numeric(tst))
       std <- data.frame(t = tst[1], zeta.factor = tst[2])
     }
 
     r <- spotsize / 2 / 10000 # radius in cm
-    #area <- get_area(r)
+    # area <- get_area(r)
     rhos <- get_rhos(Ns = x$Ns, area = get_area(r))
 
     zeta <- (std$zeta.factor * x$U) / (g * lambda * rhos)
@@ -275,13 +281,15 @@ zeta_ICP <-
 
     zeta.icp <- std$zeta.factor * sumUxA / (g * lambda * sumNS)
     szeta.icp <-
-      zeta.icp * sqrt((1 / sumNS) + (st / std$t) ^ 2 + (sumsU / sumU) ^ 2)
+      zeta.icp * sqrt((1 / sumNS) + (st / std$t)^2 + (sumsU / sumU)^2)
 
     res <- data.frame(rhos = rhos, zeta = zeta)
 
-    list(data = x,
-         results = res,
-         zeta = c(zeta = zeta.icp, std = szeta.icp))
+    list(
+      data = x,
+      results = res,
+      zeta = c(zeta = zeta.icp, std = szeta.icp)
+    )
   }
 
 
@@ -296,8 +304,8 @@ zeta_ICP <-
 #' (the default), or \code{TRUE} if processed ages
 #' @return An object of class \code{fissiontracks}
 #' @export
-as.fissiontracks <- function(x, spotsize = 40, zeta, ages = FALSE){
-  if(!ages) {
+as.fissiontracks <- function(x, spotsize = 40, zeta, ages = FALSE) {
+  if (!ages) {
     x2 <- list(
       format = 2,
       zeta = zeta,
