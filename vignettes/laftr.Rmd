@@ -126,9 +126,11 @@ ages.iso <- as.fissiontracks(result$ages, ages = TRUE)
 using the functions from the `IsoplotR` package (P. Vermeesch):
 
 ```{r kde}
-IsoplotR::kde(ages.iso)
+IsoplotR::kde(ages.iso[, 1])
 ```
+
 or the `laftr` function `geom_aKDE()` using using adaptive KDE with `ggplot2`:
+
 ```{r ggkde, warning=FALSE, message=FALSE}
 library(ggplot2)
 

@@ -42,7 +42,7 @@ U-concentration measurements (in ppm) and their analytical uncertainties.
 }
 \examples{
 data("standard")
-zeta_ICP(standard, spotsize = 40, mineral = 'apatite', standard = 'Dur')
+zeta_ICP(standard, spotsize = 40, mineral = "apatite", standard = "Dur")
 }
 \references{
 Hasebe, N., Carter, A., Hurford, A.J., Arai, S., 2009. The effect of chemical etching on LA-ICP-MS analysis in determining uranium concentration for fission-track chronometry. Geol. Soc. Lond. Spec. Publ. 324 (1), 37--46. \doi{10.1144/SP324.3}

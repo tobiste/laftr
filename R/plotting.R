@@ -23,18 +23,16 @@
 #' @source Algorithm for adaptive kernel is modified from [IsoplotR]. The
 #' algorithm for the optimal kernel bandwidth is from [provenance::botev()].
 #' @examples
-#' data("examples", package = "IsoplotR")
-#' # IsoplotR::kde(examples$UPb)
-#' ages <- IsoplotR::age(examples$UPb)[, "t.conc"]
-#' unc <- IsoplotR::age(examples$UPb)[, "s[t.conc]"]
-#'
-#' ggplot2::ggplot(data = data.frame(ages = ages, unc = unc), mapping = ggplot2::aes(x = ages)) +
+#' #' data("sample")
+#' example <- age_ICP(sample, zeta = c(0.1188, 0.0119))
+#' # IsoplotR::kde(example$ages$t)
+#' ggplot2::ggplot(data = example$ages, mapping = ggplot2::aes(x = t)) +
 #'   stat_aKDE(adaptive = TRUE) +
 #'   stat_aKDE(adaptive = FALSE, color = "red", fill = NA)
 #'
-#' ggplot2::ggplot(data = data.frame(ages = ages, unc = unc), mapping = ggplot2::aes(x = ages, weight = ages / unc)) +
-#'   geom_aKDE(aes(y = after_stat(scaled)), from = 220, to = 260, kernel = "epanechnikov", fill = "steelblue", alpha = .75) +
-#'   ggplot2::geom_histogram(aes(y = after_stat(ncount)), color = "grey", fill = "grey", alpha = .5) +
+#' ggplot2::ggplot(data = example$ages, mapping = ggplot2::aes(x = t, weight = t / st)) +
+#'   geom_aKDE(ggplot2::aes(y = ggplot2::after_stat(scaled)), kernel = "epanechnikov", fill = "steelblue", alpha = .75) +
+#'   ggplot2::geom_histogram(ggplot2::aes(y = ggplot2::after_stat(ncount)), color = "grey", fill = "grey", alpha = .5) +
 #'   ggplot2::geom_rug(alpha = 0.5)
 NULL
 
@@ -83,8 +81,6 @@ compute_density2 <- function(x, w = NULL, from, to, bw = NA, adaptive = TRUE, ad
   # nx <- length(x)
   dens <- getkde(x, from = from, to = to, bw = bw, adaptive = adaptive, n = n, adjust = adjust, kernel = kernel, weights = w)
 
-
-
   if (any(is.finite(bounds))) {
     dens <- ggplot2:::reflect_density(
       dens = dens, bounds = bounds,
@@ -131,11 +127,16 @@ getkde <- function(x, from = NA, to = NA, bw = NA, adaptive = TRUE, log = FALSE,
   class(out) <- "KDE"
   out$name <- deparse(substitute(x))
   out$log <- log
+
+  # weights <- weights[which(!is.na(x))]
+  # x <- stats::na.omit(x)
+
   if (log) {
     d <- log(x)
   } else {
     d <- x
   }
+
   if (is.na(bw)) {
     bw <- provenance::botev(d)
   }
@@ -181,32 +182,30 @@ getkde <- function(x, from = NA, to = NA, bw = NA, adaptive = TRUE, log = FALSE,
 }
 
 
-
-
-Abramson_weighted <- function(dat, from, to, bw, n = 512, weights = NULL, ...) {
-  nn <- length(dat)
-  if (is.null(weights)) {
-    weights <- rep.int(1, nn)
-  } else {
-    weights / nn
-  }
-  d <- stats::na.omit(dat)
-  nn <- length(d)
-
-  w <- weights[which(!is.na(dat))]
-
-  pdens <- IsoplotR:::pilotdensity(d, bw)
-  G <- IsoplotR:::getG(pdens)
-  lambda <- 0
-  dens <- rep(0, n)
-  for (i in 1:nn) {
-    lambda <- sqrt(G / pdens[i])
-    suppressWarnings(
-      dens <- dens + stats::density(d[i],
-        bw = bw * lambda,
-        from = from, to = to, n = n, weights = w[i], ...
-      )$y
-    )
-  }
-  dens
-}
+# Abramson_weighted <- function(dat, from, to, bw, n = 512, weights = NULL, ...) {
+#   nn <- length(dat)
+#   if (is.null(weights)) {
+#     weights <- rep.int(1, nn)
+#   } else {
+#     weights / nn
+#   }
+#   d <- stats::na.omit(dat)
+#   nn <- length(d)
+#
+#   w <- weights[which(!is.na(dat))]
+#
+#   pdens <- IsoplotR:::pilotdensity(d, bw)
+#   G <- IsoplotR:::getG(pdens)
+#   lambda <- 0
+#   dens <- rep(0, n)
+#   for (i in 1:nn) {
+#     lambda <- sqrt(G / pdens[i])
+#     suppressWarnings(
+#       dens <- dens + stats::density(d[i],
+#         bw = bw * lambda,
+#         from = from, to = to, n = n, weights = w[i], ...
+#       )$y
+#     )
+#   }
+#   dens
+# }

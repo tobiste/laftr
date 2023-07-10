@@ -22,3 +22,7 @@ An object of class \code{fissiontracks}
 \description{
 transform into a \code{"fissiontracks"} object
 }
+\examples{
+data("sample")
+as.fissiontracks(sample, spotsize = 40, zeta = session.zeta$zeta)
+}

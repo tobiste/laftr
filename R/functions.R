@@ -304,15 +304,24 @@ zeta_ICP <-
 #' (the default), or \code{TRUE} if processed ages
 #' @return An object of class \code{fissiontracks}
 #' @export
+#' @examples
+#' data("sample")
+#' as.fissiontracks(sample, spotsize = 40, zeta = session.zeta$zeta)
 as.fissiontracks <- function(x, spotsize = 40, zeta, ages = FALSE) {
   if (!ages) {
+    dfU <- cbind(x$U, NA, NA)
+    lU <-  split(dfU, 1:NROW(dfU))
+
+    dfsU <- cbind(x$sU, NA, NA)
+    lsU <-  split(dfsU, 1:NROW(dfsU))
+
     x2 <- list(
       format = 2,
       zeta = zeta,
+      spotSize = spotsize,
       Ns = x$Ns,
-      U = x$U,
-      sU = x$sU,
-      spotsize = spotsize
+      U = lU,
+      sU = lsU
     )
     class(x2) <- "fissiontracks"
   } else {
