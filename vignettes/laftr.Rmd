@@ -156,7 +156,7 @@ IsoplotR::central(ages.iso)
 ### Weighted mean
 
 ```{r w.mean}
-IsoplotR::weightedmean(ages.iso)
+IsoplotR::weightedmean(ages.iso, ranked = TRUE)
 ```
 
 ### Peak fitting
