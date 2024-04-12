@@ -129,7 +129,7 @@ using the functions from the `IsoplotR` package (P. Vermeesch):
 IsoplotR::kde(ages.iso[, 1])
 ```
 
-or the `laftr` function `geom_aKDE()` using using adaptive KDE with `ggplot2`:
+or the `laftr` function `geom_aKDE()` using adaptive KDE with `ggplot2`:
 
 ```{r ggkde, warning=FALSE, message=FALSE}
 library(ggplot2)
