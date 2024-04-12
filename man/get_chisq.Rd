@@ -7,11 +7,11 @@
 get_chisq(t, st, na.rm = TRUE)
 }
 \arguments{
-\item{t}{ages}
+\item{t}{numeric. ages}
 
-\item{st}{analytical uncertainties}
+\item{st}{numeric. analytical uncertainties}
 
-\item{na.rm}{logical. wether NA values should be removed (TRUE) or not (FALSE)}
+\item{na.rm}{logical. whether NA values should be removed (TRUE) or not (FALSE)}
 }
 \description{
 Chi-squared statistic

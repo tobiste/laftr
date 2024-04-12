@@ -52,11 +52,11 @@ library(dplyr)
 library(laftr)
 
 # load the U concentrations
-sample <- read_xlsx("../inst/extdata/example.xlsx", sheet = "sample") %>%
+sample <- read_xlsx("../inst/extdata/example.xlsx", sheet = "sample") |>
   rename(U = UCa, sU = sUCa)
 
 # load the calibration measurements for zeta factor
-zeta.measurements <- read_xlsx("../inst/extdata/example.xlsx", sheet = "standard") %>%
+zeta.measurements <- read_xlsx("../inst/extdata/example.xlsx", sheet = "standard") |>
   rename(U = UCa, sU = sUCa)
 ```
 
@@ -69,17 +69,17 @@ session.zeta <- zeta_ICP(zeta.measurements, spotsize = 40, mineral = "apatite", 
 It returns a list with the original data:
 
 ```{r zeta2}
-head(session.zeta$data) %>% as_tibble()
+head(session.zeta$data) |> as_tibble()
 ```
 
 ...  the area, track densities, and the individual zetas:
 ```{r zeta3}
-head(session.zeta$results) %>% as_tibble()
+head(session.zeta$results) |> as_tibble()
 ```
 
 ... and the final zeta factor (with uncertainty)
 ```{r zeta4}
-session.zeta$zeta %>% as_tibble()
+session.zeta$zeta |> as_tibble()
 ```
 
 
@@ -93,12 +93,12 @@ result <- age_ICP(sample, spotsize = 40, zeta = session.zeta$zeta)
 
 returns a list containing the original dataset:
 ```{r res.data}
-head(result$data) %>% as_tibble()
+head(result$data) |> as_tibble()
 ```
 
 .. the individual ages:
 ```{r ages}
-head(result$ages) %>% as_tibble()
+head(result$ages) |> as_tibble()
 ```
 
 ... the pooled age of the sample:
@@ -134,7 +134,7 @@ or the `laftr` function `geom_aKDE()` using using adaptive KDE with `ggplot2`:
 ```{r ggkde, warning=FALSE, message=FALSE}
 library(ggplot2)
 
-data.frame(t = ages.iso[, 1], st = ages.iso[, 2]) %>%
+data.frame(t = ages.iso[, 1], st = ages.iso[, 2]) |>
   ggplot(aes(x = t, weight = t / st)) +
   geom_aKDE(aes(y = after_stat(scaled)), fill = "steelblue", alpha = .75) +
   geom_histogram(aes(y = after_stat(ncount)), color = "grey", fill = "grey", alpha = .5) + # weighted histogram

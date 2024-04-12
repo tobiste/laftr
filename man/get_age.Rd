@@ -6,6 +6,17 @@
 \usage{
 get_age(U, rhos, zeta, lambda = pkg.env$lambda[1], g = pkg.env$g)
 }
+\arguments{
+\item{U}{numeric. U-concentration, given as \eqn{^{238}}{238}U/\eqn{^{29}}{29}Ca based on cps (for zircon), \eqn{^{238}}{238}U/\eqn{^{43}}{43}Ca based on cps (apatite), or \eqn{^{238}}{238}U in ppm}
+
+\item{rhos}{numeric. Spontaneous fission track density}
+
+\item{zeta}{calibration factor based on FCT2 fission-track age standard}
+
+\item{lambda}{numeric. U238 decay constant. 1.55125e-10 by default (Jaffey et al. (1971))}
+
+\item{g}{numeric. geometry factor.  0.5 by default}
+}
 \description{
 Single-grain FT age
 }

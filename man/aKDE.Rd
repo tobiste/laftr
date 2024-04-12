@@ -122,14 +122,6 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 \item{outline.type}{Type of the outline of the area; \code{"both"} draws both the
 upper and lower lines, \code{"upper"}/\code{"lower"} draws the respective lines only.
 \code{"full"} draws a closed polygon around the area.}
-
-\item{weight}{numeric vector of non-negative observation weights, hence of
-same length as \code{x}. The default \code{NULL} is equivalent to
-\code{weights = rep(1/nx, nx)} where \code{nx} is the length of (the finite entries of)
-\code{x[]}. If \code{na.rm = TRUE} and there are \code{NA}'s in \code{x}, they and the
-corresponding weights are removed before computations.
-In that case, when the original weights have summed to one, they are
-re-scaled to keep doing so. Will be ignored is \code{adaptive} is \code{TRUE}.}
 }
 \description{
 Modification of \code{\link[ggplot2:geom_density]{ggplot2::stat_density()}} for kernel density estimates using a combination of the
@@ -137,15 +129,21 @@ Botev (2010) bandwidth selector and the Abramson (1982) adaptive kernel
 bandwidth modifier.
 }
 \examples{
-#' data("sample")
+data("sample")
 example <- age_ICP(sample, zeta = c(0.1188, 0.0119))
 # IsoplotR::kde(example$ages$t)
 ggplot2::ggplot(data = example$ages, mapping = ggplot2::aes(x = t)) +
   stat_aKDE(adaptive = TRUE) +
   stat_aKDE(adaptive = FALSE, color = "red", fill = NA)
 
-ggplot2::ggplot(data = example$ages, mapping = ggplot2::aes(x = t, weight = t / st)) +
-  geom_aKDE(ggplot2::aes(y = ggplot2::after_stat(scaled)), kernel = "epanechnikov", fill = "steelblue", alpha = .75) +
-  ggplot2::geom_histogram(ggplot2::aes(y = ggplot2::after_stat(ncount)), color = "grey", fill = "grey", alpha = .5) +
+ggplot2::ggplot(
+data = example$ages,
+mapping = ggplot2::aes(x = t, weight = t / st)) +
+  geom_aKDE(
+  ggplot2::aes(y = ggplot2::after_stat(scaled)),
+  kernel = "epanechnikov", fill = "steelblue", alpha = .75) +
+  ggplot2::geom_histogram(
+  ggplot2::aes(y = ggplot2::after_stat(ncount)),
+  color = "grey", fill = "grey", alpha = .5) +
   ggplot2::geom_rug(alpha = 0.5)
 }

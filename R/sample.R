@@ -30,16 +30,3 @@
 #' data("standard")
 #' head("standard")
 "standard"
-
-
-# library(dplyr)
-# sample <- readxl::read_xlsx('data/example.xlsx', sheet = 'sample')  %>%
-#   rename(U = UCa, sU = sUCa)
-#
-# # load the calibration measurements for zeta factor
-# standard <- readxl::read_xlsx('data/example.xlsx', sheet = 'standard') %>%
-#   rename(U = UCa, sU = sUCa)
-#
-#
-# save(sample, file = "data/sample.RData", compress = TRUE, ascii = TRUE)
-# save(standard, file = "data/standard.RData", compress = TRUE, ascii = TRUE)

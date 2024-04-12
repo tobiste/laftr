@@ -44,6 +44,11 @@ get_UxA <- function(r, U) {
 }
 
 #' Single-grain FT age
+#' @param U numeric. U-concentration, given as \eqn{^{238}}{238}U/\eqn{^{29}}{29}Ca based on cps (for zircon), \eqn{^{238}}{238}U/\eqn{^{43}}{43}Ca based on cps (apatite), or \eqn{^{238}}{238}U in ppm
+#' @param rhos numeric. Spontaneous fission track density
+#' @param zeta calibration factor based on FCT2 fission-track age standard
+#' @param lambda numeric. U238 decay constant. 1.55125e-10 by default (Jaffey et al. (1971))
+#' @param g numeric. geometry factor.  0.5 by default
 get_age <-
   function(U,
            rhos,
@@ -65,6 +70,10 @@ get_age_error_perc <- function(t, st) {
 }
 
 #' Zeta error
+#'
+#' @param x `"dataframe"` with `Ns`, `st`, `t`, `U`, `sU`
+#' @param zeta calibration factor based on FCT2 fission-track age standard
+#' @note see data("sample") for details on `x`
 get_zeta_error <- function(x, zeta) {
   Ns <- U <- sU <- NULL
   sqrt(1 / x$Ns + (x$st / x$t)^2 + (x$sU / x$U)^2) * zeta
@@ -75,13 +84,13 @@ get_zeta_error <- function(x, zeta) {
 #'
 #' blabla bla
 #'
-#' @param Ns  count of spontaneous fission-tracks
-#' @param rhos Spontaneous fission track density
-#' @param U U-concentration, given as \eqn{^{238}}{238}U/\eqn{^{29}}{29}Ca based on cps (for zircon), \eqn{^{238}}{238}U/\eqn{^{43}}{43}Ca based on cps (apatite), or \eqn{^{238}}{238}U in ppm
-#' @param sU standard deviation of \code{U}
-#' @param zeta calibration factor based on FCT2 fission-track age standard
-#' @note You can either use U ratio cps, or U ppm. Whatever you choose for zeta calculation you must use for age calculation too
-get_ages <- function(x, rhos, zeta, ...) {
+#' @param x `"dataframe"` with count of spontaneous fission-tracks.
+#' containing `U` U-concentration, given as \eqn{^{238}}{238}U/\eqn{^{29}}{29}Ca based on cps (for zircon), \eqn{^{238}}{238}U/\eqn{^{43}}{43}Ca based on cps (apatite), or \eqn{^{238}}{238}U in ppm
+#' and `sU` standard deviation of \code{U}
+#' @param rhos numeric. Spontaneous fission track density
+#' @param zeta numeric. Calibration factor based on FCT2 fission-track age standard
+#' @note You can either use U ratio cps, or U ppm. Whatever you choose for zeta calculation, you must use it for age calculation, too.
+get_ages <- function(x, rhos, zeta) {
   t <- get_age(
     U = x$U,
     rhos = rhos,
@@ -117,17 +126,17 @@ get_chisq <- function(t, st, na.rm = TRUE) {
 
 #' Probability of chi-squared
 #'
-#' @param chisq Chi-squared statistic
-#' @param n Number of grains
+#' @param chisq numeric. Chi-squared statistic
+#' @param n integer. Number of grains
 #' @importFrom stats pchisq
 get_prob_chisq <- function(chisq, n) {
   stats::pchisq(chisq, df = n - 1, lower.tail = FALSE)
 }
 
 #' Chisq stats
-#' @param t ages
-#' @param st analytical uncertainties
-#' @param na.rm logical. wether NA values should be removed (TRUE) or not (FALSE)
+#' @param t numeric. ages
+#' @param st numeric. analytical uncertainties
+#' @param na.rm logical. whether NA values should be removed (TRUE) or not (FALSE)
 chi_stats <- function(t, st, na.rm = TRUE) {
   if (na.rm) {
     x <- data.frame(t, st)
@@ -163,7 +172,7 @@ get_age_pooled0 <-
 #' @param x dataset
 #' @param r Radius
 #' @param zeta two-element vector with the zeta-factor and its standard error.
-pooled_age <- function(x, r, zeta, ...) {
+pooled_age <- function(x, r, zeta) {
   t.pool <- get_age_pooled0(x, r = r, zeta = zeta[1])
   st.pool <- t.pool * sqrt(1 / sum(x$Ns, na.rm = TRUE) + (zeta[2] / zeta[1])^
     2 + (sum(x$sU, na.rm = TRUE) / sum(x$U, na.rm = TRUE))^2)
@@ -305,15 +314,17 @@ zeta_ICP <-
 #' @return An object of class \code{fissiontracks}
 #' @export
 #' @examples
+#' data(standard)
+#' session.zeta <- zeta_ICP(standard, spotsize = 40, mineral = "apatite", standard = "Dur")
 #' data("sample")
 #' as.fissiontracks(sample, spotsize = 40, zeta = session.zeta$zeta)
 as.fissiontracks <- function(x, spotsize = 40, zeta, ages = FALSE) {
   if (!ages) {
     dfU <- cbind(x$U, NA, NA)
-    lU <-  split(dfU, 1:NROW(dfU))
+    lU <- split(dfU, 1:NROW(dfU))
 
     dfsU <- cbind(x$sU, NA, NA)
-    lsU <-  split(dfsU, 1:NROW(dfsU))
+    lsU <- split(dfsU, 1:NROW(dfsU))
 
     x2 <- list(
       format = 2,

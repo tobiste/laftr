@@ -23,6 +23,8 @@ An object of class \code{fissiontracks}
 transform into a \code{"fissiontracks"} object
 }
 \examples{
+data(standard)
+session.zeta <- zeta_ICP(standard, spotsize = 40, mineral = "apatite", standard = "Dur")
 data("sample")
 as.fissiontracks(sample, spotsize = 40, zeta = session.zeta$zeta)
 }

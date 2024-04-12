@@ -4,7 +4,7 @@
 \alias{pooled_age}
 \title{Pooled age}
 \usage{
-pooled_age(x, r, zeta, ...)
+pooled_age(x, r, zeta)
 }
 \arguments{
 \item{x}{dataset}
