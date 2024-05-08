@@ -138,7 +138,7 @@ data.frame(t = ages.iso[, 1], st = ages.iso[, 2]) |>
   ggplot(aes(x = t, weight = t / st)) +
   geom_aKDE(aes(y = after_stat(scaled)), fill = "steelblue", alpha = .75) +
   geom_histogram(aes(y = after_stat(ncount)), color = "grey", fill = "grey", alpha = .5) + # weighted histogram
-  geom_rug(alpha = 0.5)
+  geom_rug(alpha = 0.5) 
 ```
 
 ### Radial plot
