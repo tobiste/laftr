@@ -1,75 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://tobiste.github.io/laftr/404.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/articles/laftr.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/index.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/reference/aKDE.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/reference/age_ICP.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/reference/as.fissiontracks.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/reference/chi_stats.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/reference/get_UxA.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/reference/get_age.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/reference/get_ages.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/reference/get_area.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/reference/get_chisq.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/reference/get_prob_chisq.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/reference/get_rhos.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/reference/get_zeta_error.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/reference/getkde.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/reference/pooled_age.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/reference/sample.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/reference/standard.html</loc>
-  </url>
-  <url>
-    <loc>https://tobiste.github.io/laftr/reference/zeta_ICP.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://tobiste.github.io/laftr/404.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/LICENSE.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/articles/index.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/articles/laftr.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/authors.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/index.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/reference/aKDE.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/reference/age_ICP.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/reference/as.fissiontracks.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/reference/chi_stats.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/reference/get_UxA.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/reference/get_age.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/reference/get_ages.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/reference/get_area.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/reference/get_chisq.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/reference/get_prob_chisq.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/reference/get_rhos.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/reference/get_zeta_error.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/reference/getkde.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/reference/index.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/reference/pooled_age.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/reference/sample.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/reference/standard.html</loc></url>
+<url><loc>https://tobiste.github.io/laftr/reference/zeta_ICP.html</loc></url>
 </urlset>
+
