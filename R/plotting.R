@@ -12,7 +12,7 @@
 #' `x[]`. If `na.rm = TRUE` and there are `NA`'s in `x`, they and the
 #' corresponding weights are removed before computations.
 #' In that case, when the original weights have summed to one, they are
-#' re-scaled to keep doing so. Will be ignored is `adaptive` is `TRUE`.
+#' re-scaled to keep doing so. Ignored if `adaptive` is `TRUE`.
 #' @param from,to the left and right-most points of the grid at which the density is to be estimated
 #' @param bw the bandwidth of the KDE. If `NULL`, `bw` will be calculated automatically using the algorithm by Botev et al. (2010).
 #' @param adaptive logical flag controlling if the adaptive KDE modifier of Abramson (1982) is used
@@ -38,6 +38,7 @@ NULL
 
 #' @rdname aKDE
 #' @export
+#' @importFrom ggplot2 layer
 stat_aKDE <- function(mapping = NULL, data = NULL, stat = "DensityAdaptive", geom = "area",
                       position = "stack",
                       ...,
@@ -57,6 +58,7 @@ stat_aKDE <- function(mapping = NULL, data = NULL, stat = "DensityAdaptive", geo
 
 #' @rdname aKDE
 #' @export
+#' @importFrom ggplot2 layer
 geom_aKDE <- function(mapping = NULL, data = NULL, stat = "DensityAdaptive", position = "identity",
                       ..., na.rm = FALSE, orientation = NA, show.legend = NA, inherit.aes = TRUE,
                       outline.type = "upper") {
@@ -101,6 +103,7 @@ compute_density2 <- function(x, w = NULL, from, to, bw = NA, adaptive = TRUE, ad
   )
 }
 
+#' @importFrom ggplot2 ggproto
 StatDensityAdaptive <- ggproto(
   "_class" = "StatDensityAdaptive", "_inherit" = Stat,
   compute_group = function(data, scales, from = NA, to = NA, bw = NA, adaptive = TRUE, adjust = 1, kernel = "gaussian",

@@ -310,10 +310,10 @@ zeta_ICP <-
 as.fissiontracks <- function(x, spotsize = 40, zeta, ages = FALSE) {
   if (!ages) {
     dfU <- cbind(x$U, NA, NA)
-    lU <-  split(dfU, 1:NROW(dfU))
+    lU <- split(dfU, 1:NROW(dfU))
 
     dfsU <- cbind(x$sU, NA, NA)
-    lsU <-  split(dfsU, 1:NROW(dfsU))
+    lsU <- split(dfsU, 1:NROW(dfsU))
 
     x2 <- list(
       format = 2,

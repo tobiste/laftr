@@ -136,9 +136,12 @@ library(ggplot2)
 
 data.frame(t = ages.iso[, 1], st = ages.iso[, 2]) %>%
   ggplot(aes(x = t, weight = t / st)) +
-  geom_aKDE(aes(y = after_stat(scaled)), fill = "steelblue", alpha = .75) +
-  geom_histogram(aes(y = after_stat(ncount)), color = "grey", fill = "grey", alpha = .5) + # weighted histogram
-  geom_rug(alpha = 0.5)
+  geom_aKDE(aes(y = after_stat(scaled)), fill = "#B63679FF") +
+  geom_histogram(aes(y = after_stat(ncount)), color = "white", fill = "grey", alpha = .5) + # weighted histogram
+  geom_rug(color = "grey") +
+  geom_label(x = 60, y = 1, label = paste0("n=", length(na.omit(ages.iso[, 1])), "/", length(ages.iso[, 1])), hjust = 1) +
+  labs(x = "age [Ma]", y = NULL) +
+  theme_classic()
 ```
 
 ### Radial plot
