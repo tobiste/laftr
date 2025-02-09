@@ -3,7 +3,7 @@ title: "LA-ICP-MS fission track dating"
 author: "Tobias Stephan"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to tectonicr}
+  %\VignetteIndexEntry{LA-ICP-MS fission track dating}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -52,34 +52,34 @@ library(dplyr)
 library(laftr)
 
 # load the U concentrations
-sample <- read_xlsx('../inst/extdata/example.xlsx', sheet = 'sample')  %>%
-    rename(U = UCa, sU = sUCa)
+sample <- read_xlsx("../inst/extdata/example.xlsx", sheet = "sample") |>
+  rename(U = UCa, sU = sUCa)
 
 # load the calibration measurements for zeta factor
-zeta.measurements <- read_xlsx('../inst/extdata/example.xlsx', sheet = 'standard') %>%
-    rename(U = UCa, sU = sUCa)
+zeta.measurements <- read_xlsx("../inst/extdata/example.xlsx", sheet = "standard") |>
+  rename(U = UCa, sU = sUCa)
 ```
 
 ## Zeta factor of the ICP-session
 
 `zeta_ICP()` by giving the calibration measurements and the used standard:
 ```{r zeta1}
-session.zeta <- zeta_ICP(zeta.measurements, spotsize = 40, mineral = 'apatite', standard = 'Dur') 
+session.zeta <- zeta_ICP(zeta.measurements, spotsize = 40, mineral = "apatite", standard = "Dur")
 ```
 It returns a list with the original data:
 
 ```{r zeta2}
-head(session.zeta$data) %>% as_tibble()
+head(session.zeta$data) |> as_tibble()
 ```
 
 ...  the area, track densities, and the individual zetas:
 ```{r zeta3}
-head(session.zeta$results) %>% as_tibble()
+head(session.zeta$results) |> as_tibble()
 ```
 
 ... and the final zeta factor (with uncertainty)
 ```{r zeta4}
-session.zeta$zeta %>% as_tibble()
+session.zeta$zeta |> as_tibble()
 ```
 
 
@@ -93,12 +93,12 @@ result <- age_ICP(sample, spotsize = 40, zeta = session.zeta$zeta)
 
 returns a list containing the original dataset:
 ```{r res.data}
-head(result$data) %>% as_tibble()
+head(result$data) |> as_tibble()
 ```
 
 .. the individual ages:
 ```{r ages}
-head(result$ages) %>% as_tibble()
+head(result$ages) |> as_tibble()
 ```
 
 ... the pooled age of the sample:
@@ -115,7 +115,7 @@ result$stats
 ## Compatibility with IsoplotR
 
 ```{r isoplotr}
-#library(IsoplotR)
+# library(IsoplotR)
 data.iso <- as.fissiontracks(sample, spotsize = 40, zeta = session.zeta$zeta)
 ages.iso <- as.fissiontracks(result$ages, ages = TRUE)
 ```
@@ -126,9 +126,23 @@ ages.iso <- as.fissiontracks(result$ages, ages = TRUE)
 using the functions from the `IsoplotR` package (P. Vermeesch):
 
 ```{r kde}
-IsoplotR::kde(ages.iso)
+IsoplotR::kde(ages.iso[, 1])
 ```
 
+or the `laftr` function `geom_aKDE()` using adaptive KDE with `ggplot2`:
+
+```{r ggkde, warning=FALSE, message=FALSE}
+library(ggplot2)
+
+data.frame(t = ages.iso[, 1], st = ages.iso[, 2]) |>
+  ggplot(aes(x = t, weight = t / st)) +
+  geom_aKDE(aes(y = after_stat(scaled)), fill = "#B63679FF") +
+  geom_histogram(aes(y = after_stat(ncount)), color = "white", fill = "grey", alpha = .5) + # weighted histogram
+  geom_rug(color = "grey") +
+  geom_label(x = 60, y = 1, label = paste0("n=", length(na.omit(ages.iso[, 1])), "/", length(ages.iso[, 1])), hjust = 1) +
+  labs(x = "age [Ma]", y = NULL) +
+  theme_classic()
+```
 
 ### Radial plot
 
@@ -145,7 +159,7 @@ IsoplotR::central(ages.iso)
 ### Weighted mean
 
 ```{r w.mean}
-IsoplotR::weightedmean(ages.iso)
+IsoplotR::weightedmean(ages.iso, ranked = TRUE)
 ```
 
 ### Peak fitting
