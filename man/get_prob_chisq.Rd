@@ -7,9 +7,9 @@
 get_prob_chisq(chisq, n)
 }
 \arguments{
-\item{chisq}{Chi-squared statistic}
+\item{chisq}{numeric. Chi-squared statistic}
 
-\item{n}{Number of grains}
+\item{n}{integer. Number of grains}
 }
 \description{
 Probability of chi-squared

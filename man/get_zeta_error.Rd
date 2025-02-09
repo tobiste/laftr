@@ -6,6 +6,14 @@
 \usage{
 get_zeta_error(x, zeta)
 }
+\arguments{
+\item{x}{\code{"dataframe"} with \code{Ns}, \code{st}, \code{t}, \code{U}, \code{sU}}
+
+\item{zeta}{calibration factor based on FCT2 fission-track age standard}
+}
 \description{
 Zeta error
+}
+\note{
+see data("sample") for details on \code{x}
 }

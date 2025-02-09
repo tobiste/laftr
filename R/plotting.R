@@ -23,16 +23,25 @@
 #' @source Algorithm for adaptive kernel is modified from [IsoplotR]. The
 #' algorithm for the optimal kernel bandwidth is from [provenance::botev()].
 #' @examples
-#' #' data("sample")
+#' data("sample")
 #' example <- age_ICP(sample, zeta = c(0.1188, 0.0119))
 #' # IsoplotR::kde(example$ages$t)
 #' ggplot2::ggplot(data = example$ages, mapping = ggplot2::aes(x = t)) +
 #'   stat_aKDE(adaptive = TRUE) +
 #'   stat_aKDE(adaptive = FALSE, color = "red", fill = NA)
 #'
-#' ggplot2::ggplot(data = example$ages, mapping = ggplot2::aes(x = t, weight = t / st)) +
-#'   geom_aKDE(ggplot2::aes(y = ggplot2::after_stat(scaled)), kernel = "epanechnikov", fill = "steelblue", alpha = .75) +
-#'   ggplot2::geom_histogram(ggplot2::aes(y = ggplot2::after_stat(ncount)), color = "grey", fill = "grey", alpha = .5) +
+#' ggplot2::ggplot(
+#'   data = example$ages,
+#'   mapping = ggplot2::aes(x = t, weight = t / st)
+#' ) +
+#'   geom_aKDE(
+#'     ggplot2::aes(y = ggplot2::after_stat(scaled)),
+#'     kernel = "epanechnikov", fill = "steelblue", alpha = .75
+#'   ) +
+#'   ggplot2::geom_histogram(
+#'     ggplot2::aes(y = ggplot2::after_stat(ncount)),
+#'     color = "grey", fill = "grey", alpha = .5
+#'   ) +
 #'   ggplot2::geom_rug(alpha = 0.5)
 NULL
 
@@ -104,7 +113,7 @@ compute_density2 <- function(x, w = NULL, from, to, bw = NA, adaptive = TRUE, ad
 }
 
 #' @importFrom ggplot2 ggproto
-StatDensityAdaptive <- ggproto(
+StatDensityAdaptive <- ggplot2::ggproto(
   "_class" = "StatDensityAdaptive", "_inherit" = Stat,
   compute_group = function(data, scales, from = NA, to = NA, bw = NA, adaptive = TRUE, adjust = 1, kernel = "gaussian",
                            n = 512, na.rm = FALSE, bounds = c(-Inf, Inf),
@@ -123,7 +132,27 @@ StatDensityAdaptive <- ggproto(
   dropped_aes = c("weight")
 )
 
-
+#' Adaptive kernel density estimates
+#'
+#' Modification of [ggplot2::stat_density()] for kernel density estimates using a combination of the
+#' Botev (2010) bandwidth selector and the Abramson (1982) adaptive kernel
+#' bandwidth modifier.
+#' @param x numeric vector. Ages
+#' @param ... optional arguments to be passed on to R's density function.
+#' @param from numeric. minimum age of the time axis. If NULL, this is set automatically
+#' @param to numeric. maximum age of the time axis. If NULL, this is set automatically
+#' @param bw numeric. the bandwidth of the KDE. If NULL, bw will be calculated
+#' automatically using the algorithm by Botev et al. (2010).
+#' @param adaptive logical flag controlling if the adaptive KDE modifier of Abramson (1982) is used
+#' @param log	logical. transform the ages to a log scale if TRUE
+#' @param  n integer. horizontal resolution (i.e., the number of segments) of the density estimate.
+#' @param weights numeric vector of non-negative observation weights, hence of
+#' same length as `x`. The default `NULL` is equivalent to
+#' `weights = rep(1/nx, nx)` where `nx` is the length of (the finite entries of)
+#' `x[]`. If `na.rm = TRUE` and there are `NA`'s in `x`, they and the
+#' corresponding weights are removed before computations.
+#' In that case, when the original weights have summed to one, they are
+#' re-scaled to keep doing so. Will be ignored is `adaptive` is `TRUE`.
 getkde <- function(x, from = NA, to = NA, bw = NA, adaptive = TRUE, log = FALSE,
                    n = 512, weights = NULL, ...) {
   out <- list()

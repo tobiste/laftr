@@ -4,22 +4,20 @@
 \alias{get_ages}
 \title{Single-grain FT age FT ages}
 \usage{
-get_ages(x, rhos, zeta, ...)
+get_ages(x, rhos, zeta)
 }
 \arguments{
-\item{rhos}{Spontaneous fission track density}
+\item{x}{\code{"dataframe"} with count of spontaneous fission-tracks.
+containing \code{U} U-concentration, given as \eqn{^{238}}{238}U/\eqn{^{29}}{29}Ca based on cps (for zircon), \eqn{^{238}}{238}U/\eqn{^{43}}{43}Ca based on cps (apatite), or \eqn{^{238}}{238}U in ppm
+and \code{sU} standard deviation of \code{U}}
 
-\item{zeta}{calibration factor based on FCT2 fission-track age standard}
+\item{rhos}{numeric. Spontaneous fission track density}
 
-\item{Ns}{count of spontaneous fission-tracks}
-
-\item{U}{U-concentration, given as \eqn{^{238}}{238}U/\eqn{^{29}}{29}Ca based on cps (for zircon), \eqn{^{238}}{238}U/\eqn{^{43}}{43}Ca based on cps (apatite), or \eqn{^{238}}{238}U in ppm}
-
-\item{sU}{standard deviation of \code{U}}
+\item{zeta}{numeric. Calibration factor based on FCT2 fission-track age standard}
 }
 \description{
 blabla bla
 }
 \note{
-You can either use U ratio cps, or U ppm. Whatever you choose for zeta calculation you must use for age calculation too
+You can either use U ratio cps, or U ppm. Whatever you choose for zeta calculation, you must use it for age calculation, too.
 }
